@@ -141,17 +141,25 @@ app.post('/login', async (req, res) => {
         if (!match)
             return res.status(401).json({ success: false, message: 'Invalid credentials' });
 
+      
+        let role = user.role.trim().toLowerCase(); // removes spaces and lowercases
         let redirectUrl = '';
-        switch (user.role) {
-            case 'Vendor': redirectUrl = '/Vendor/dashboard.html'; break;
-            case 'Procurement Manager': redirectUrl = '/Procurement_Manager/dashboard.html'; break;
-            case 'Contract Team': redirectUrl = '/Contract_Team/dashboard.html'; break;
-            case 'Finance Team': redirectUrl = '/Finance_Team/dashboard.html'; break;
-            case 'Department Head': redirectUrl = '/Department_Head/dashboard.html'; break;
-            case 'Admin': redirectUrl = '/Admin/dashboard.html'; break;
-            default:
-                return res.status(403).json({ success: false, message: 'Access denied' });
-        }
+
+        const roleMap = {
+              'vendor': '/Vendor/dashboard.html',
+              'procurement manager': '/Procurement Manager/dashboard.html',
+              'contract team': '/Contract Team/dashboard.html',
+              'finance team': '/Finance Team/dashboard.html',
+              'department head': '/Department Head/dashboard.html',
+              'admin': '/Admin/dashboard.html'
+        };
+
+redirectUrl = roleMap[role];
+
+if (!redirectUrl) {
+    return res.status(403).json({ success: false, message: 'Access denied' });
+}
+
 
         res.json({ success: true, redirectUrl });
 
