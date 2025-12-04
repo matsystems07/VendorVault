@@ -35,12 +35,13 @@ const db = new Pool({
 
 // Login page
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'Login_Signup_Pages/login.html'));
+    res.sendFile(path.join(__dirname, '../Frontend-Backend/Login_Signup_Pages/login.html'));
+
 });
 
 // Vendor register page
 app.get('/register-vendor.html', (req, res) =>
-    res.sendFile(path.join(__dirname, 'Login_Signup_Pages/register-vendor.html'))
+    res.sendFile(path.join(__dirname, '../Frontend-Backend/Login_Signup_Pages/register-vendor.html'))
 );
 
 // ---------------- VENDOR SIGNUP ----------------
