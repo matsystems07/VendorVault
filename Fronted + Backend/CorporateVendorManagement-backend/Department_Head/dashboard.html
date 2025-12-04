@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Department Head Dashboard</title>
+    <link rel="stylesheet" href="portal.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Chart.js for graphs -->
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation Bar -->
+        <div class="navbar">
+            <h1>Department Head Portal</h1>
+            <div class="nav-links">
+                <a href="dashboard.html" class="active">Dashboard</a>
+                <a href="active_contracts.html">Contracts</a>
+                <a href="department_review.html">Review</a>
+                <a href="settings.html">Settings</a>
+                <a href="../Login_Signup_Pages/Login.html" class="logout-btn">Logout</a>
+            </div>
+        </div>
+
+        <!-- Dashboard Content -->
+        <div class="section">
+            <h2>Department Head Dashboard</h2>
+            <div class="dashboard-cards">
+                <div class="dashboard-card">
+                    <div class="card-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <h3>Total Active Contracts</h3>
+                    <p id="active-contracts" class="contract-count">0</p>
+                </div>
+                <div class="dashboard-card">
+                    <div class="card-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h3>Contracts Pending Review</h3>
+                    <p id="pending-review" class="contract-count">0</p>
+                </div>
+                <div class="dashboard-card">
+                    <div class="card-icon">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    <h3>Completed Reviews</h3>
+                    <p id="completed-reviews" class="contract-count">0</p>
+                </div>
+            </div>
+
+            <!-- Graph Section -->
+            <div class="chart-section">
+                <canvas id="departmentChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Fetch data from the backend
+        async function fetchDashboardData() {
+            try {
+                const response = await fetch('/department-dashboard');
+                const data = await response.json();
+
+                // Update the UI with fetched data
+                document.getElementById('active-contracts').textContent = data.activeContracts;
+                document.getElementById('pending-review').textContent = data.pendingReview;
+                document.getElementById('completed-reviews').textContent = data.completedReviews;
+
+                // Update the chart data
+                updateChart(data.activeContracts, data.pendingReview, data.completedReviews);
+            } catch (error) {
+                console.error('Error fetching dashboard data:', error);
+                alert('Unable to load dashboard data. Please try again later.');
+            }
+        }
+
+        // Function to update the pie chart
+        function updateChart(active, pending, completed) {
+            const ctx = document.getElementById('departmentChart').getContext('2d');
+            const departmentChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ['Active Contracts', 'Contracts Pending Review', 'Completed Reviews'],
+                    datasets: [{
+                        data: [active, pending, completed],
+                        backgroundColor: ['#4CAF50', '#FF9800', '#2196F3'],
+                        borderColor: ['#388E3C', '#F57C00', '#1976D2'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        }
+
+        // Fetch dashboard data when page loads
+        fetchDashboardData();
+    </script>
+</body>
+</html>

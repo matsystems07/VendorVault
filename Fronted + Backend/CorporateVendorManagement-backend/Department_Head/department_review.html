@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Department Budget Management</title>
+    <link rel="stylesheet" href="portal.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation Bar -->
+        <div class="navbar">
+            <h1>Department Head Portal</h1>
+            <div class="nav-links">
+                <a href="dashboard.html">Dashboard</a>
+                <a href="active_contracts.html">Contracts</a>
+                <a href="department_review.html" class="active">Review</a>
+                <a href="settings.html">Settings</a>
+                <a href="../Login_Signup_Pages/Login.html" class="logout-btn">Logout</a>
+            </div>
+        </div>
+
+        <!-- Budget Management Section -->
+        <div class="section">
+            <h2>Manage Department Budgets</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Department Name</th>
+                        <th>Current Budget</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="department-table-body">
+                    <!-- Dynamic content will be populated here using JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Function to fetch departments data and populate the table
+        function loadDepartments() {
+            fetch('/get-departments')
+                .then(response => response.json())
+                .then(data => {
+                    const tableBody = document.getElementById('department-table-body');
+                    tableBody.innerHTML = ''; // Clear existing rows
+    
+                    data.forEach(department => {
+                        // Ensure the budget is a valid number
+                        const budget = parseFloat(department.Budget);
+                        const formattedBudget = isNaN(budget) ? 'N/A' : `$${budget.toFixed(2)}`;
+    
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${department.Name}</td>
+                            <td>${formattedBudget}</td>
+                            <td>
+                                <button onclick="adjustBudget(${department.DepartmentID}, 'increase')">Increase</button>
+                                <button onclick="adjustBudget(${department.DepartmentID}, 'decrease')">Decrease</button>
+                            </td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+                })
+                .catch(err => console.error('Error loading departments:', err));
+        }
+    
+        // Function to adjust budget
+        function adjustBudget(departmentID, action) {
+            const amount = prompt('Enter the amount to ' + action + ' the budget:');
+            if (amount && !isNaN(amount) && parseFloat(amount) > 0) {
+                fetch('/adjust-budget', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        departmentID: departmentID,
+                        action: action,
+                        amount: parseFloat(amount)
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Budget updated successfully!');
+                        loadDepartments(); // Reload the departments after successful update
+                    } else {
+                        alert('Error updating budget.');
+                    }
+                })
+                .catch(err => console.error('Error adjusting budget:', err));
+            } else {
+                alert('Invalid amount entered.');
+            }
+        }
+    
+        // Load departments when the page loads
+        window.onload = loadDepartments;
+    </script>
+    
+
+
+
+</body>
+</html>
