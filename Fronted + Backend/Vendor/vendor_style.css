@@ -1,0 +1,244 @@
+/* General Styling */
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background: #f3f4f6;
+    color: #333;
+
+    background-size: cover; /* Ensures the image covers the entire page */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+    background-attachment: fixed; /* Keeps the image fixed during scrolling */
+    background-position: center; /* Centers the image */
+}
+
+.container {
+    width: 100%;
+}
+
+/* Navigation Bar */
+.navbar {
+    background: rgba(16, 14, 173, 0.9); /* Slightly transparent background for better visibility */
+
+    color: #fff;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Adds shadow to navbar */
+}
+
+.navbar h1 {
+    font-size: 24px;
+    margin: 0;
+}
+
+.nav-links a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 10px;
+    font-weight: bold;
+}
+
+.nav-links .logout-btn {
+    background: #f7070b;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: #fff;
+}
+
+/* Section Styling */
+.section {
+    padding: 30px 20px;
+    background: rgba(255, 255, 255, 0.95); /* Semi-transparent white for readability */
+    margin: 20px auto;
+    border-radius: 10px;
+    max-width: 800px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.section h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #100ead;
+}
+
+/* Form Group */
+.form-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group textarea,
+.dashboard-card {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+textarea {
+    resize: none;
+}
+
+/* Buttons */
+.btn {
+    background: #f7070b;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background: #f74817;
+}
+
+/* Dashboard Content */
+.dashboard-content {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.dashboard-card {
+    background: rgba(249, 249, 249, 0.95); /* Semi-transparent card */
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+    width: 250px;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-card h3 {
+    color: #100ead;
+    margin-bottom: 15px;
+}
+
+/* Notification Bell */
+.notification-bell {
+    position: relative;
+    cursor: pointer;
+    font-size: 24px;
+    color: #fff;
+}
+
+.notification-bell .bell-icon {
+    font-size: 24px;
+}
+
+.notification-count {
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    background: #f7070b;
+    color: #fff;
+    padding: 5px 7px;
+    border-radius: 50%;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* Notification Dropdown */
+.notification-dropdown {
+    display: none;
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    background: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    width: 300px;
+    z-index: 1000;
+}
+
+.notification-dropdown h3 {
+    margin: 10px;
+    font-size: 18px;
+    color: #333;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+}
+
+.notification-dropdown ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 10px;
+}
+
+.notification-dropdown ul li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    color: #333;
+}
+
+.notification-dropdown ul li:hover {
+    background: #f9f9f9;
+    cursor: pointer;
+}
+
+/* Notification Bell and Dropdown */
+.notification-bell {
+    position: relative;
+    cursor: pointer;
+    font-size: 24px;
+    color: #fff;
+}
+
+.notification-count {
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    background-color: #f7070b;
+    color: #fff;
+    padding: 5px 7px;
+    border-radius: 50%;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.notification-dropdown {
+    display: none;
+    position: absolute;
+    top: 50px; /* Adjust as necessary */
+    right: 20px;
+    background: #fff;
+    border-radius: 5px;
+    width: 300px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+
+.notification-dropdown h3 {
+    margin: 10px;
+    font-size: 18px;
+    color: #333;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+}
+
+.notification-dropdown ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 10px;
+}
+
+.notification-dropdown ul li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    color: #333;
+}
+
+.notification-dropdown ul li:hover {
+    background: #f9f9f9;
+    cursor: pointer;
+}

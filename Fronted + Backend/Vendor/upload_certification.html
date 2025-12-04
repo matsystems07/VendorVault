@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Certification</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./vendor_style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="navbar">
+            <h1>Vendor Portal</h1>
+            <div class="nav-links">
+                <a href="./dashboard.html">Dashboard</a>
+                <a href="./activate_contract.html">Activate Contract</a>
+                <a href="./orders.html">Orders</a>
+                <a href="./upload_certification.html" class="active">Upload Certification</a>
+                <a href="./view_certifications.html">View Certifications</a>
+                <a href="../Login_Signup_Pages/Login.html" class="logout-btn">Logout</a>
+            </div>
+            <div class="nav-icons">
+                <div class="notification-bell" id="notification-bell">
+                    <span class="bell-icon">&#128276;</span>
+                    <span id="notification-count" class="notification-count">0</span>
+                </div>
+            </div>
+        </div>
+
+        <section class="section">
+            <h2>Upload Compliance Certificate</h2>
+            <form class="upload-form" enctype="multipart/form-data" id="upload-form">
+                <div class="form-group">
+                    <label for="cert-name">Certification Name</label>
+                    <input type="text" id="cert-name" name="cert-name" placeholder="Enter certification name" required>
+                </div>
+                <div class="form-group">
+                    <label for="cert-file">Upload File</label>
+                    <input type="file" id="cert-file" name="cert-file" accept=".pdf,.docx,.jpg,.png" required>
+                </div>
+                <button type="submit" class="btn">Upload</button>
+            </form>
+
+            <!-- Status Message -->
+            <div id="status-message" style="display:none;"></div>
+        </section>
+    </div>
+
+    <div class="notification-dropdown" id="notification-dropdown">
+        <h3>Notifications</h3>
+        <ul id="notifications-list">
+            <!-- Notifications will be dynamically inserted here -->
+        </ul>
+    </div>
+
+    <!-- JavaScript to handle form submission and AJAX -->
+    <script>
+document.getElementById('upload-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    // Prepare the form data
+    const formData = new FormData();
+    formData.append('cert-name', document.getElementById('cert-name').value);
+    formData.append('cert-file', document.getElementById('cert-file').files[0]);
+    formData.append('vendorID', 1);  // Replace with actual vendor ID
+
+    // Show loading message
+    const statusMessage = document.getElementById('status-message');
+    statusMessage.style.display = 'block';
+    statusMessage.innerHTML = 'Uploading your certification...';
+
+    // Use fetch with async/await to handle the promise correctly
+    (async () => {
+        try {
+            const response = await fetch('/upload-certification', {
+                method: 'POST',
+                body: formData
+            });
+            
+            if (!response.ok) {
+                throw new Error('Failed to upload certification');
+            }
+
+            const data = await response.json();
+            statusMessage.innerHTML = 'Certification uploaded successfully!';
+            statusMessage.style.color = 'green';
+        } catch (error) {
+            statusMessage.innerHTML = 'Error uploading certification: ' + error.message;
+            statusMessage.style.color = 'red';
+        }
+    })();
+});
+
+    </script>
+</body>
+</html>

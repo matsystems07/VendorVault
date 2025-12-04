@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Procurement Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="dashboard.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation Bar -->
+        <div class="navbar">
+            <h1>Procurement Team Portal</h1>
+            <div class="nav-links">
+                <a href="dashboard.html" class="active">Dashboard</a>
+                <a href="vendor_management.html">Vendors</a>
+                <a href="active_contracts.html">Contracts</a>
+                <a href="purchase_orders.html">Orders</a>
+                <a href="vendor_evaluation.html">Vendor Evaluation</a>
+                <a href="manage_notifications.html" >Send Notification</a>
+                <a href="settings.html">Settings</a>
+                <a href="../Login_Signup_Pages/Login.html" class="logout-btn">Logout</a>
+            </div>
+        </div>
+
+        <!-- Dashboard Content -->
+        <div class="dashboard-section">
+            <h2>Procurement Dashboard</h2>
+            <div class="cards">
+                <div class="card">
+                    <i class="icon">&#128202;</i>
+                    <div>
+                        <h3>Total Vendors</h3>
+                        <p id="total-vendors">Loading...</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <i class="icon">&#128179;</i>
+                    <div>
+                        <h3>Active Contracts</h3>
+                        <p id="active-contracts">Loading...</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <i class="icon">&#128190;</i>
+                    <div>
+                        <h3>Purchase Orders</h3>
+                        <p id="purchase-orders">Loading...</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <i class="icon">&#128200;</i>
+                    <div>
+                        <h3>Average Rating</h3>
+                        <p id="average-rating">Loading...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chart Section -->
+            <div class="charts">
+                <div class="chart-container">
+                    <canvas id="performanceChart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <canvas id="orderStatusChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function fetchDashboardMetrics() {
+            const res = await fetch('/dashboard-metrics');
+            const data = await res.json();
+
+            document.getElementById('total-vendors').innerText = data.totalVendors || 0;
+            document.getElementById('active-contracts').innerText = data.activeContracts || 0;
+            document.getElementById('purchase-orders').innerText = data.purchaseOrders || 0;
+            document.getElementById('average-rating').innerText = (data.averageRating || 0).toFixed(1);
+        }
+
+        async function renderVendorPerformanceChart() {
+            const res = await fetch('/vendor-performance');
+            const data = await res.json();
+
+            const labels = data.map(v => v.Name);
+            const ratings = data.map(v => v.avgRating);
+
+            new Chart(document.getElementById('performanceChart').getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels,
+                    datasets: [{
+                        label: 'Performance Rating',
+                        data: ratings,
+                        backgroundColor: '#3498db'
+                    }]
+                }
+            });
+        }
+
+        async function renderOrderStatusChart() {
+            const res = await fetch('/order-status');
+            const data = await res.json();
+
+            new Chart(document.getElementById('orderStatusChart').getContext('2d'), {
+                type: 'pie',
+                data: {
+                    labels: Object.keys(data),
+                    datasets: [{
+                        data: Object.values(data),
+                        backgroundColor: ['#2ecc71', '#f1c40f', '#e74c3c']
+                    }]
+                }
+            });
+        }
+
+        fetchDashboardMetrics();
+        renderVendorPerformanceChart();
+        renderOrderStatusChart();
+    </script>
+</body>
+</html>

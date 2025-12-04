@@ -1,0 +1,106 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orders</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./vendor_style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="navbar">
+            <h1>Vendor Portal</h1>
+            <div class="nav-links">
+                <a href="./dashboard.html" >Dashboard</a>
+                <a href="./activate_contract.html">Activate Contract</a>
+                <a href="./orders.html" class="active">Orders</a>
+                <a href="./upload_certification.html">Upload Certification</a>
+                <a href="./view_certifications.html">View Certifications</a>
+                <a href="../Login_Signup_Pages/Login.html" class="logout-btn">Logout</a>
+            </div>
+            <div class="nav-icons">
+                <div class="notification-bell" id="notification-bell">
+                    <span class="bell-icon">&#128276;</span>
+                    <span id="notification-count" class="notification-count">0</span>
+                </div>
+            </div>
+        </div>
+
+        <section class="section">
+            <h2>Orders</h2>
+            <table class="orders-table">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Description</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="orders-table-body">
+                    <!-- Orders will be dynamically inserted here -->
+                </tbody>
+            </table>
+        </section>
+    </div>
+
+    <script>
+        // Fetch orders when the page loads
+        window.onload = function() {
+            const vendorID = 2; // Example vendor ID, this should be dynamic based on logged-in vendor
+            fetchOrders(vendorID);
+        };
+
+        // Function to fetch orders
+        function fetchOrders(vendorID) {
+            fetch(`/get-orders/${vendorID}`)
+                .then(response => response.json())
+                .then(orders => {
+                    const tableBody = document.getElementById('orders-table-body');
+                    tableBody.innerHTML = ''; // Clear any existing orders
+
+                    orders.forEach(order => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>#${order.POID}</td>
+                            <td>${order.ItemDetails}</td>
+                            <td><span class="status">${order.Status}</span></td>
+                            <td>
+                                <button class="btn" onclick="updateStatus(${order.POID})">Update Status</button>
+                            </td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+                })
+                .catch(err => console.error('Error fetching orders:', err));
+        }
+
+        // Function to update the status of an order
+        function updateStatus(orderID) {
+            const newStatus = prompt('Enter new status: Pending, Approved, or Fulfilled');
+            if (newStatus && ['Pending', 'Approved', 'Fulfilled'].includes(newStatus)) {
+                fetch(`/update-order-status/${orderID}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ status: newStatus })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Order status updated successfully!');
+                        fetchOrders(2); // Reload the orders table (replace 2 with dynamic vendor ID)
+                    } else {
+                        alert('Error updating order status');
+                    }
+                })
+                .catch(err => console.error('Error updating status:', err));
+            } else {
+                alert('Invalid status entered');
+            }
+        }
+    </script>
+</body>
+</html>

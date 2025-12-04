@@ -1,0 +1,117 @@
+/* General Body Styling */
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background: #f3f4f6;
+    color: #333;
+}
+
+/* Container */
+.container {
+    width: 100%;
+}
+
+/* Navbar Styling */
+.navbar {
+    background: rgba(16, 14, 173, 0.9);
+    color: #fff;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.navbar h1 {
+    font-size: 24px;
+    margin: 0;
+}
+
+.nav-links a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 10px;
+    font-weight: bold;
+}
+
+.nav-links .logout-btn {
+    background: #f7070b;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: #fff;
+}
+
+/* Dashboard Section */
+.dashboard-section {
+    padding: 20px;
+}
+
+.dashboard-section h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #100ead;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+/* Cards Section */
+.cards {
+    display: flex;
+    gap: 20px;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+.card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 250px;
+    text-align: center;
+}
+
+.card i.icon {
+    font-size: 36px;
+    color: #100ead;
+}
+
+.card h3 {
+    margin: 0;
+    color: #333;
+    font-size: 18px;
+}
+
+.card p {
+    margin: 5px 0 0;
+    font-size: 20px;
+    font-weight: bold;
+    color: #100ead;
+}
+
+/* Chart Section */
+.charts {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.chart-container {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 400px;
+    height: 400px;
+}
+
+.card:hover {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    transform: translateY(-5px);
+    transition: all 0.3s ease-in-out;
+}

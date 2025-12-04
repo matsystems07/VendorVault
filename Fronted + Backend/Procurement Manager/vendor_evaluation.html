@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendor Evaluation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="portal.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation Bar -->
+        <div class="navbar">
+            <h1>Procurement Team Portal</h1>
+            <div class="nav-links">
+                <a href="dashboard.html">Dashboard</a>
+                <a href="vendor_management.html">Vendors</a>
+                <a href="active_contracts.html" class="active">Contracts</a>
+                <a href="purchase_orders.html">Orders</a>
+                <a href="vendor_evaluation.html" class="active">Vendor Evaluation</a>
+                <a href="manage_notifications.html">Send Notification</a>
+                <a href="settings.html">Settings</a>
+                <a href="../Login_Signup_Pages/Login.html" class="logout-btn">Logout</a>
+            </div>
+        </div>
+
+        <!-- Vendor Evaluation Content -->
+        <div class="section">
+            <h2>Vendor Evaluation</h2>
+
+            <!-- Vendor Evaluation Form -->
+            <form id="vendor-evaluation-form">
+                <label for="vendor">Select Vendor:</label>
+                <select id="vendor" name="vendor" required>
+                    <option value="">Loading vendors...</option>
+                </select>
+
+                <label for="quality">Quality Rating (out of 5):</label>
+                <input type="number" id="quality" name="quality" step="0.1" min="0" max="5" required>
+
+                <label for="pricing">Pricing Rating (out of 5):</label>
+                <input type="number" id="pricing" name="pricing" step="0.1" min="0" max="5" required>
+
+                <label for="timeliness">Timeliness Rating (out of 5):</label>
+                <input type="number" id="timeliness" name="timeliness" step="0.1" min="0" max="5" required>
+
+                <label for="summary">Performance Summary:</label>
+                <textarea id="summary" name="summary" required></textarea>
+
+                <button type="submit">Submit Evaluation</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Fetch vendors and populate dropdown
+        async function fetchVendors() {
+            const vendorDropdown = document.getElementById("vendor");
+            try {
+                const response = await fetch('/vendors');
+                const vendors = await response.json();
+
+                vendorDropdown.innerHTML = '<option value="">Select Vendor</option>';
+                vendors.forEach(vendor => {
+                    const option = document.createElement('option');
+                    option.value = vendor.VendorID;
+                    option.textContent = vendor.Name;
+                    vendorDropdown.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Error fetching vendors:', error);
+                vendorDropdown.innerHTML = '<option value="">Unable to load vendors</option>';
+            }
+        }
+
+        // Handle form submission
+        document.getElementById('vendor-evaluation-form').addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const formData = {
+                vendorId: document.getElementById('vendor').value,
+                qualityRating: document.getElementById('quality').value,
+                pricingRating: document.getElementById('pricing').value,
+                timelinessRating: document.getElementById('timeliness').value,
+                performanceSummary: document.getElementById('summary').value,
+            };
+
+            try {
+                const response = await fetch('/create-evaluation', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData),
+                });
+
+                if (response.ok) {
+                    alert('Evaluation submitted successfully!');
+                } else {
+                    throw new Error('Failed to submit evaluation');
+                }
+            } catch (error) {
+                console.error('Error submitting evaluation:', error);
+                alert('Unable to submit evaluation. Please try again.');
+            }
+        });
+
+        // Initialize page
+        fetchVendors();
+    </script>
+</body>
+</html>

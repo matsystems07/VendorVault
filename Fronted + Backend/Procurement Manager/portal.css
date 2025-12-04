@@ -1,0 +1,231 @@
+/* General Styling */
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background: #f3f4f6;
+    color: #333;
+}
+
+.container {
+    width: 100%;
+    margin: 0 auto;
+}
+
+/* Navigation Bar */
+.navbar {
+    background: rgba(16, 14, 173, 0.9);
+    color: #fff;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.navbar h1 {
+    font-size: 24px;
+    margin: 0;
+}
+
+.nav-links a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 10px;
+    font-weight: bold;
+}
+
+.nav-links .logout-btn {
+    background: #f7070b;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: #fff;
+}
+
+.nav-links a.active {
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+/* Section Styling */
+.section {
+    padding: 30px 20px;
+    background: rgba(255, 255, 255, 0.95);
+    margin: 20px auto;
+    border-radius: 10px;
+    max-width: 800px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.section h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #100ead;
+}
+
+/* Form Group */
+.form-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group textarea {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    width: 100%;
+}
+
+textarea {
+    resize: none;
+}
+
+/* Buttons */
+.btn {
+    background: #f7070b;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.btn:hover {
+    background: #f74817;
+}
+
+/* Table Styling */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 14px;
+}
+
+.table th, .table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+.table th {
+    background: #f3f3f3;
+    color: #333;
+    font-weight: bold;
+}
+
+.table tbody tr:nth-child(odd) {
+    background: #f9f9f9;
+}
+
+.table tbody tr:hover {
+    background: #f1f1f1;
+    cursor: pointer;
+}
+
+/* Purchase Orders Form Styles */
+form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    align-items: center;
+    margin-bottom: 20px;
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+form label {
+    font-weight: bold;
+    margin-right: 5px;
+    font-size: 0.9rem;
+}
+
+form input, form select {
+    flex: 1;
+    font-size: 0.9rem;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+form input:focus, form select:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+form button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+form button:hover {
+    background-color: #0056b3;
+}
+
+/* Purchase Orders Table Styles */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 0.9rem;
+}
+
+.table th {
+    background-color: #343a40;
+    color: white;
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.table tbody tr:nth-child(odd) {
+    background-color: #f8f9fa;
+}
+
+.table tbody tr:nth-child(even) {
+    background-color: #ffffff;
+}
+
+.table tbody tr:hover {
+    background-color: #f1f3f5;
+    cursor: pointer;
+}
+
+.table th, .table td {
+    text-align: center;
+}
+
+/* Purchase Orders Section Header */
+.section h2 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: #333;
+    text-align: center;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+}

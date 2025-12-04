@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send Notification</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="portal.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation Bar -->
+        <div class="navbar">
+            <h1>Admin Portal</h1>
+            <div class="nav-links">
+                <a href="dashboard.html" >Dashboard</a>
+                <a href="vendor_management.html">Vendors</a>
+                <a href="active_contracts.html">Contracts</a>
+                <a href="purchase_orders.html">Orders</a>
+                <a href="vendor_evaluation.html">Vendor Evaluation</a>
+                <a href="manage_notifications.html" class="active" >Send Notification</a>
+                <a href="settings.html">Settings</a>
+                <a href="../Login_Signup_Pages/Login.html" class="logout-btn">Logout</a>
+            </div>
+ 
+        </div>
+
+        <!-- Send Notification Section -->
+        <div class="section">
+            <h2>Send Notification</h2>
+            <form id="notification-form">
+                <div class="form-group">
+                    <label for="user-id">Select User:</label>
+                    <select id="user-id" name="userID" required>
+                        <option value="">Loading users...</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="related-entity">Related Entity:</label>
+                    <select id="related-entity" name="relatedEntity" required>
+                        <option value="">Select an entity</option>
+                        <option value="Contract">Contract</option>
+                        <option value="PurchaseOrder">Purchase Order</option>
+                        <option value="Budget">Budget</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Message:</label>
+                    <textarea id="message" name="message" rows="4" placeholder="Enter your message here" required></textarea>
+                </div>
+
+                <button type="submit" class="btn">Send Notification</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Fetch users for dropdown
+        async function fetchUsers() {
+            const userDropdown = document.getElementById('user-id');
+            try {
+                const response = await fetch('/users');
+                const users = await response.json();
+
+                // Populate dropdown
+                userDropdown.innerHTML = '<option value="">Select User</option>';
+                users.forEach(user => {
+                    const option = document.createElement('option');
+                    option.value = user.UserID;
+                    option.textContent = `${user.Username} (${user.Role})`;
+                    userDropdown.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Error fetching users:', error);
+                userDropdown.innerHTML = '<option value="">Unable to load users</option>';
+            }
+        }
+
+        // Handle form submission
+        document.getElementById('notification-form').addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const formData = {
+                userID: document.getElementById('user-id').value,
+                relatedEntity: document.getElementById('related-entity').value,
+                message: document.getElementById('message').value
+            };
+
+            try {
+                const response = await fetch('/send-notification', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    alert('Notification sent successfully!');
+                    document.getElementById('notification-form').reset(); // Reset form
+                } else {
+                    throw new Error(result.error || 'Failed to send notification');
+                }
+            } catch (error) {
+                console.error('Error sending notification:', error);
+                alert('Unable to send notification. Please try again later.');
+            }
+        });
+
+        // Initialize page
+        fetchUsers();
+    </script>
+</body>
+</html>

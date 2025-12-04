@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice Management</title>
+    <link rel="stylesheet" href="portal.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation Bar -->
+        <div class="navbar">
+            <h1>Finance Team Portal</h1>
+            <div class="nav-links">
+                <a href="dashboard.html">Dashboard</a>
+
+                <a href="financial_reports.html">Reports</a>
+                <a href="budget_allocation.html" >Budget Allocation</a>
+                <a href="expense_allocation.html" >Allocate Expenses</a>
+                <a href="invoice_management.html" class="active">Invoices</a>
+                <a href="settings.html">Settings</a>
+                <a href="../Login_Signup_Pages/Login.html" class="logout-btn">Logout</a>
+            </div>
+
+                   <!-- Notification Bell -->
+                   <div class="nav-icons">
+                    <div class="notification-bell" id="notification-bell">
+                        <span class="bell-icon">&#128276;</span>
+                        <span id="notification-count" class="notification-count">0</span>
+                    </div>
+                </div>
+            </div>
+        
+            <!-- Notification Dropdown -->
+            <div class="notification-dropdown" id="notification-dropdown">
+                <h3>Notifications</h3>
+                <ul id="notifications-list">
+                    <!-- Notifications will be dynamically inserted here -->
+                </ul>
+            </div>
+        
+        </div>
+
+        <!-- Invoice Management Content -->
+        <div class="section">
+            <h2>Invoice Management</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Invoice ID</th>
+                        <th>Vendor</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                        <th>Due Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>INV-001</td>
+                        <td>Vendor A</td>
+                        <td>$20,000</td>
+                        <td><span class="status pending">Pending</span></td>
+                        <td>2024-04-01</td>
+                        <td><a href="invoice_details.html" class="btn">View Details</a></td>
+                    </tr>
+                    <tr>
+                        <td>INV-002</td>
+                        <td>Vendor B</td>
+                        <td>$30,000</td>
+                        <td><span class="status paid">Paid</span></td>
+                        <td>2024-03-15</td>
+                        <td><a href="invoice_details.html" class="btn">View Details</a></td>
+                    </tr>
+                    <tr>
+                        <td>INV-003</td>
+                        <td>Vendor C</td>
+                        <td>$50,000</td>
+                        <td><span class="status pending">Pending</span></td>
+                        <td>2024-05-01</td>
+                        <td><a href="invoice_details.html" class="btn">View Details</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
+<script src="notifications.js"></script>

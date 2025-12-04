@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Certifications</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./vendor_style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="navbar">
+            <h1>Vendor Portal</h1>
+            <div class="nav-links">
+                <a href="./dashboard.html">Dashboard</a>
+                <a href="./activate_contract.html">Activate Contract</a>
+                <a href="./orders.html">Orders</a>
+                <a href="./upload_certification.html">Upload Certification</a>
+                <a href="./view_certifications.html" class="active">View Certifications</a>
+                <a href="../Login_Signup_Pages/Login.html" class="logout-btn">Logout</a>
+            </div>
+
+            <div class="nav-icons">
+                <div class="notification-bell" id="notification-bell">
+                    <span class="bell-icon">&#128276;</span>
+                    <span id="notification-count" class="notification-count">0</span>
+                </div>
+            </div>
+        </div>
+
+        <section class="section">
+            <h2>Uploaded Certifications</h2>
+            <div class="certifications-list">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Certification Name</th>
+                            <th>View / Download</th>
+                        </tr>
+                    </thead>
+                    <tbody id="certifications-table">
+                        <!-- Certification data will be dynamically inserted here -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Fetch certifications from the backend
+        async function fetchCertifications() {
+            try {
+                const response = await fetch('/certifications');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch certifications');
+                }
+                const certifications = await response.json();
+
+                // Populate table with certifications
+                const tableBody = document.getElementById('certifications-table');
+                tableBody.innerHTML = certifications.map(cert => `
+                    <tr>
+                        <td>${cert.name}</td>
+                        <td><a href="${cert.path}" target="_blank">View / Download</a></td>
+                    </tr>
+                `).join('');
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Failed to load certifications.');
+            }
+        }
+
+        // Call the function to load certifications on page load
+        fetchCertifications();
+    </script>
+</body>
+</html>

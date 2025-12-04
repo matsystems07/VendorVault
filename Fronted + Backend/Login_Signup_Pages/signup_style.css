@@ -1,0 +1,88 @@
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #fff;
+    background-image: url("./Vendor\ Image.webp");
+}
+
+.container {
+    width: 400px;
+    background: #090981;
+    color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+.form-container {
+    padding: 30px;
+}
+
+.form-header h1 {
+    margin: 0;
+    font-size: 36px;
+    font-family: "Parkinsans", sans-serif;
+    font-weight: bold;
+    text-align: center;
+}
+
+.form-header p {
+    margin: 10px 0 20px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.signup-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group select {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+.form-group select {
+    background: #fff;
+    color: #000;
+}
+
+.btn {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s;
+}
+
+.register-btn {
+    background-color: #f7070b;
+    color: #fff;
+}
+
+.register-btn:hover {
+    background-color: #f74817;
+}

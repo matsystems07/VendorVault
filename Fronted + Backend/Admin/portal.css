@@ -1,0 +1,210 @@
+/* General Styling */
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background: #f3f4f6;
+    color: #333;
+}
+
+/* Container */
+.container {
+    width: 100%;
+    margin: 0 auto;
+}
+
+/* Navigation Bar */
+.navbar {
+    background: rgba(16, 14, 173, 0.9);
+    color: #fff;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.navbar h1 {
+    font-size: 24px;
+    margin: 0;
+}
+
+.nav-links a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 10px;
+    font-weight: bold;
+}
+
+.nav-links .logout-btn {
+    background: #f7070b;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: #fff;
+}
+
+.nav-links a.active {
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+/* Section Styling */
+.section {
+    padding: 30px 20px;
+    background: #fff;
+    margin: 20px auto;
+    border-radius: 10px;
+    max-width: 1000px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.section h2 {
+    text-align: center;
+    margin-bottom: 40px;
+    color: #333;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+/* Dashboard Cards */
+.dashboard-cards {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.dashboard-card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    width: 30%;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.dashboard-card .card-icon {
+    font-size: 40px;
+    color: #4CAF50;
+    margin-bottom: 15px;
+}
+
+.dashboard-card h3 {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+}
+
+.dashboard-card .contract-count {
+    font-size: 36px;
+    font-weight: bold;
+    color: #100ead;
+}
+
+/* Table Styling */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 14px;
+}
+
+.table th, .table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+.table th {
+    background-color: #4CAF50;
+    color: #fff;
+}
+
+.table tbody tr:nth-child(odd) {
+    background-color: #f9f9f9;
+}
+
+.table tbody tr:hover {
+    background-color: #f1f1f1;
+    cursor: pointer;
+}
+
+.status {
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.status.active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.status.pending {
+    background-color: #FF9800;
+    color: white;
+}
+
+.status.completed {
+    background-color: #2196F3;
+    color: white;
+}
+
+.btn {
+    background-color: #f7070b;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #f74817;
+}
+
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.table th, .table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.table th {
+    background-color: #f2f2f2;
+}
+
+.status.active {
+    color: green;
+    font-weight: bold;
+}
+
+.status.inactive {
+    color: red;
+    font-weight: bold;
+}
+
+.btn {
+    padding: 5px 10px;
+    text-decoration: none;
+    color: white;
+    background-color: #4CAF50;
+    border-radius: 4px;
+}
+
+.btn.delete-btn {
+    background-color: #f44336;
+}

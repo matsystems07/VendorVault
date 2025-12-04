@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget Allocation</title>
+    <link rel="stylesheet" href="portal.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation Bar -->
+        <div class="navbar">
+            <h1>Finance Team Portal</h1>
+            <div class="nav-links">
+                <a href="dashboard.html">Dashboard</a>
+                <a href="financial_reports.html">Reports</a>
+                <a href="budget_allocation.html" class="active">Budget Allocation</a>
+                <a href="expense_allocation.html" >Allocate Expenses</a>
+                <a href="invoice_management.html">Invoices</a>
+                <a href="settings.html">Settings</a>
+                <a href="../Login_Signup_Pages/Login.html" class="logout-btn">Logout</a>
+            </div>
+
+            <!-- Notification Bell -->
+            <div class="nav-icons">
+                <div class="notification-bell" id="notification-bell">
+                    <span class="bell-icon">&#128276;</span>
+                    <span id="notification-count" class="notification-count">0</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notification Dropdown -->
+        <div class="notification-dropdown" id="notification-dropdown">
+            <h3>Notifications</h3>
+            <ul id="notifications-list">
+                <!-- Notifications will be dynamically inserted here -->
+            </ul>
+        </div>
+
+        <!-- Budget Allocation Content -->
+        <div class="section">
+            <h2>Budget Allocation</h2>
+            <form id="budget-allocation-form">
+                <!-- Static Departments Dropdown -->
+                <div class="form-group">
+                    <label for="department">Department</label>
+                    <select id="department" name="department" required>
+                        <option value="" disabled selected>Select Department</option>
+                        <option value="1">Human Resources (Budget: $50,000.00)</option>
+                        <option value="2">Operations (Budget: $150,000.00)</option>
+                        <option value="3">Marketing (Budget: $100,000.00)</option>
+                        <option value="4">Finance (Budget: $200,000.00)</option>
+                        <option value="5">IT (Budget: $120,000.00)</option>
+                        <option value="6">Legal (Budget: $80,000.00)</option>
+                    </select>
+                </div>
+
+                <!-- Vendor Dropdown -->
+                <div class="form-group">
+                    <label for="vendor">Vendor</label>
+                    <select id="vendor" name="vendor" required>
+                        <option value="" disabled selected>Select Vendor</option>
+                        <!-- Vendor options will still be populated dynamically -->
+                    </select>
+                </div>
+
+                <!-- Amount Input -->
+                <div class="form-group">
+                    <label for="amount">Amount Allocated ($)</label>
+                    <input type="number" id="amount" name="amount" step="0.01" min="0" placeholder="Enter amount" required>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn submit-btn">Allocate Budget</button>
+            </form>
+        </div>
+    </div>
+    <script src="notifications.js"></script>
+    <script>
+        // Fetch available vendors and populate the vendor dropdown
+        async function fetchVendors() {
+            try {
+                const response = await fetch('/vendors');
+                const vendors = await response.json();
+                const vendorDropdown = document.getElementById('vendor');
+
+                vendors.forEach(vendor => {
+                    const option = document.createElement('option');
+                    option.value = vendor.VendorID;
+                    option.textContent = `${vendor.Name} (${vendor.ServiceCategory})`;
+                    vendorDropdown.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Error fetching vendors:', error);
+            }
+        }
+
+        // Call functions to fetch vendors when the page loads
+        fetchVendors();
+
+        // Handle budget allocation form submission
+        document.getElementById('budget-allocation-form').addEventListener('submit', async (e) => {
+            e.preventDefault(); // Prevent default form submission
+
+            const departmentID = document.getElementById('department').value;
+            const vendorID = document.getElementById('vendor').value;
+            const amount = document.getElementById('amount').value;
+
+            try {
+                const response = await fetch('/budget-allocation', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ departmentID, vendorID, amount }),
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    alert('Budget allocated successfully!');
+                    // Reset the form
+                    document.getElementById('budget-allocation-form').reset();
+                } else {
+                    alert(result.message || 'Failed to allocate budget.');
+                }
+            } catch (error) {
+                console.error('Error during budget allocation:', error);
+                alert('Something went wrong. Please try again.');
+            }
+        });
+    </script>
+</body>
+</html>

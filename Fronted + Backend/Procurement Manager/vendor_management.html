@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendor Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="portal.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation Bar -->
+        <div class="navbar">
+            <h1>Procurement Team Portal</h1>
+            <div class="nav-links">
+                <a href="dashboard.html">Dashboard</a>
+                <a href="vendor_management.html" class="active">Vendors</a>
+                <a href="active_contracts.html">Contracts</a>
+                <a href="purchase_orders.html">Orders</a>
+                <a href="vendor_evaluation.html">Vendor Evaluation</a>
+                <a href="manage_notifications.html" >Send Notification</a>
+                <a href="settings.html">Settings</a>
+                <a href="../Login_Signup_Pages/Login.html" class="logout-btn">Logout</a>
+            </div>
+        </div>
+
+        <!-- Vendor Management Content -->
+        <div class="section">
+            <h2>Vendor Details</h2>
+            <table class="table" id="vendor-table">
+                <thead>
+                    <tr>
+                        <th>Vendor Name</th>
+                        <th>Category</th>
+                        <th>Status</th>
+                        <th>Rating</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Rows will be dynamically added here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Fetch vendor data from the server
+
+        async function fetchVendors() {
+    try {
+        const response = await fetch('/vendors-with-ratings');
+        if (!response.ok) {
+            throw new Error('Failed to fetch vendor data');
+        }
+
+        const vendors = await response.json();
+        console.log('Vendors:', vendors); // Log vendor data
+
+        // Populate the vendor table
+        const tableBody = document.querySelector('#vendor-table tbody');
+        tableBody.innerHTML = ''; // Clear existing rows
+
+        vendors.forEach(vendor => {
+            const averageRating = parseFloat(vendor.AverageRating) || 0; // Parse as number
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${vendor.Name}</td>
+                <td>${vendor.ServiceCategory}</td>
+                <td>${vendor.Status}</td>
+                <td>${averageRating.toFixed(1)}</td> <!-- Safely use toFixed -->
+
+            `;
+            tableBody.appendChild(row);
+        });
+    } catch (error) {
+        console.error('Error fetching vendors:', error);
+        alert('Unable to load vendor data. Please try again later.');
+    }
+}
+
+
+
+        // Initialize the page
+        fetchVendors();
+    </script>
+</body>
+</html>

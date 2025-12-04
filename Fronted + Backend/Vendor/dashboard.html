@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendor Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="./vendor_style.css">
+</head>
+<body>
+    <div class="container">
+
+        <!-- Navigation Bar -->
+        <div class="navbar">
+            <h1>Vendor Portal</h1>
+            <div class="nav-links">
+                <a href="./dashboard.html" class="active">Dashboard</a>
+                <a href="./activate_contract.html">Activate Contract</a>
+                <a href="./orders.html">Orders</a>
+                <a href="./upload_certification.html">Upload Certification</a>
+                <a href="./view_certifications.html">View Certifications</a>
+                <a href="../Login_Signup_Pages/Login.html" class="logout-btn">Logout</a>
+            </div>
+
+                   <!-- Notification Bell -->
+                   <div class="nav-icons">
+                    <div class="notification-bell" id="notification-bell">
+                        <span class="bell-icon">&#128276;</span>
+                        <span id="notification-count" class="notification-count">0</span>
+                    </div>
+                </div>
+            </div>
+        
+            <!-- Notification Dropdown -->
+            <div class="notification-dropdown" id="notification-dropdown">
+                <h3>Notifications</h3>
+                <ul id="notifications-list">
+                    <!-- Notifications will be dynamically inserted here -->
+                </ul>
+            </div>
+
+
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="section">
+            <h2>Vendor Dashboard</h2>
+            <div class="dashboard-content">
+
+                <!-- Performance Evaluations with Bar Graph -->
+                <div class="dashboard-card performance-card">
+                    <h3>Performance Evaluations</h3>
+                    <canvas id="performanceChart" width="300" height="200"></canvas>
+                    <p class="chart-caption">Quality, Timeliness, Cost Efficiency</p>
+                </div>
+
+                <!-- Active Contracts Pie Chart -->
+                <div class="dashboard-card contract-pie-card">
+                    <h3>Active Contracts</h3>
+                    <canvas id="contractsPieChart"></canvas>
+                </div>
+
+                <!-- Order Completion Progress -->
+                <div class="dashboard-card progress-card">
+                    <h3>Order Completion</h3>
+                    <div class="progress-bar">
+                        <div class="progress" id="order-progress"></div>
+                    </div>
+                    <p class="progress-caption" id="order-completion"></p>
+                </div>
+
+            </div>
+        </section>
+    </div>
+    <script src="./notifications.js"></script>
+    <script>
+        // Get Vendor ID dynamically (replace with actual logic to get logged-in vendor ID)
+        const vendorID = 2; // Example vendor ID
+
+        // Fetch Performance Data
+        function fetchPerformanceData() {
+            fetch(`/get-vendor-performance/${vendorID}`)
+                .then(response => response.json())
+                .then(data => {
+                    const { QualityRating, PricingRating, TimelinessRating } = data;
+
+                    const ctx = document.getElementById('performanceChart').getContext('2d');
+                    const performanceChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: ['Quality', 'Timeliness', 'Cost Efficiency'],
+                            datasets: [{
+                                label: 'Rating (Out of 5)',
+                                data: [QualityRating, TimelinessRating, PricingRating],  // Rating out of 5
+                                backgroundColor: ['#017C01', '#FFC107', '#2196F3'],
+                                borderColor: ['#388E3C', '#FFA000', '#1976D2'],
+                                borderWidth: 1,
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    max: 5  // Adjusting to 5-point scale
+                                }
+                            }
+                        }
+                    });
+                })
+                .catch(err => console.error('Error fetching performance data:', err));
+        }
+
+        // Fetch Order Completion Data
+        function fetchOrderCompletion() {
+            fetch(`/get-order-completion/${vendorID}`)
+                .then(response => response.json())
+                .then(data => {
+                    const completionPercentage = data.completionPercentage;
+                    const progressBar = document.getElementById('order-progress');
+                    const progressCaption = document.getElementById('order-completion');
+                    progressBar.style.width = `${completionPercentage}%`;
+                    progressCaption.innerText = `${completionPercentage}% of Orders Completed`;
+                })
+                .catch(err => console.error('Error fetching order completion data:', err));
+        }
+
+        // Fetch Data on Page Load
+        window.onload = function() {
+            fetchPerformanceData();
+            fetchOrderCompletion();
+        };
+
+        // Doughnut Chart for Active Contracts
+        const contractsPieCtx = document.getElementById('contractsPieChart').getContext('2d');
+        const contractsPieChart = new Chart(contractsPieCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Active', 'Completed', 'Pending'],
+                datasets: [{
+                    data: [70, 20, 10], // Example data, you should dynamically fetch this
+                    backgroundColor: ['#FD3206', '#2196F3', '#FFC107'],
+                    borderColor: ['#388E3C', '#1976D2', '#FFA000'],
+                    borderWidth: 1,
+                }]
+            },
+            options: {
+                responsive: true,
+                cutoutPercentage: 70,
+            }
+        });
+    </script>
+</body>
+</html>

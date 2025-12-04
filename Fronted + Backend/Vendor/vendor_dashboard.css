@@ -1,0 +1,216 @@
+/* General Styling */
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background: #f3f4f6;
+    color: #333;
+}
+
+/* Container */
+.container {
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Navigation Bar */
+.navbar {
+    background: rgba(16, 14, 173, 0.9);
+    color: #fff;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.navbar h1 {
+    font-size: 24px;
+    margin: 0;
+}
+
+.nav-links a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 10px;
+    font-weight: bold;
+}
+
+.nav-links a.active {
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+/* Dashboard Section Styling */
+.section {
+    padding: 30px 20px;
+    background: #fff;
+    margin: 20px auto;
+    border-radius: 10px;
+    max-width: 1000px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.section h2 {
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Dashboard Cards Styling */
+.dashboard-content {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.dashboard-card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    width: 45%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.dashboard-card h3 {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.chart-caption {
+    font-size: 14px;
+    color: #666;
+}
+
+/* Progress Bar */
+.progress-bar {
+    width: 100%;
+    background-color: #f1f1f1;
+    border-radius: 25px;
+    height: 20px;
+    margin-top: 10px;
+}
+
+.progress {
+    height: 100%;
+    background-color: #4CAF50;
+    border-radius: 25px;
+    text-align: center;
+    color: white;
+    line-height: 20px;
+}
+
+.progress-caption {
+    font-size: 14px;
+    color: #666;
+    margin-top: 5px;
+}
+
+/* Purchase Orders List */
+#purchase-orders {
+    list-style-type: none;
+    padding: 0;
+}
+
+#purchase-orders li {
+    background: #f9f9f9;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Graph Styling */
+canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* Hover Effects for Cards */
+.dashboard-card:hover {
+    background-color: #f9f9f9;
+}
+
+/* Button Styling */
+.btn {
+    background-color: #f7070b;
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 5px;
+    font-size: 14px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #f74817;
+}
+/* Notification Bell and Dropdown */
+.notification-bell {
+    position: relative;
+    cursor: pointer;
+    font-size: 24px;
+    color: #fff;
+}
+
+.notification-count {
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    background-color: #f7070b;
+    color: #fff;
+    padding: 5px 7px;
+    border-radius: 50%;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.notification-dropdown {
+    display: none;
+    position: absolute;
+    top: 50px; /* Adjust as necessary */
+    right: 20px;
+    background: #fff;
+    border-radius: 5px;
+    width: 300px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+
+.notification-dropdown h3 {
+    margin: 10px;
+    font-size: 18px;
+    color: #333;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+}
+
+.notification-dropdown ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 10px;
+}
+
+.notification-dropdown ul li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    color: #333;
+}
+
+.notification-dropdown ul li:hover {
+    background: #f9f9f9;
+    cursor: pointer;
+}

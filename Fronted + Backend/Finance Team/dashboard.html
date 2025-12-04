@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finance Team Dashboard</title>
+    <link rel="stylesheet" href="portal.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation Bar -->
+        <div class="navbar">
+            <h1>Finance Team Portal</h1>
+            <div class="nav-links">
+                <a href="dashboard.html" class="active">Dashboard</a>
+                <a href="financial_reports.html">Reports</a>
+                <a href="budget_allocation.html" >Budget Allocation</a>
+                <a href="expense_allocation.html" >Allocate Expenses</a>
+                <a href="settings.html">Settings</a>
+                <a href="../Login_Signup_Pages/Login.html" class="logout-btn">Logout</a>
+            </div>
+
+                               <!-- Notification Bell -->
+        <div class="nav-icons">
+            <div class="notification-bell" id="notification-bell">
+                <span class="bell-icon">&#128276;</span>
+                <span id="notification-count" class="notification-count">0</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Dropdown -->
+    <div class="notification-dropdown" id="notification-dropdown">
+        <h3>Notifications</h3>
+        <ul id="notifications-list">
+            <!-- Notifications will be dynamically inserted here -->
+        </ul>
+    </div>
+
+
+
+        </div>
+
+        <!-- Dashboard Content -->
+        <div class="section">
+            <h2>Finance Team Dashboard</h2>
+            <div class="dashboard-cards">
+                <div class="dashboard-card">
+                    <div class="card-icon">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                    <h3>Total Budget</h3>
+                    <p id="total-budget" class="contract-count">$0.00</p>
+                </div>
+                <div class="dashboard-card">
+                    <div class="card-icon">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <h3>Total Payments</h3>
+                    <p id="total-payments" class="contract-count">$0.00</p>
+                </div>
+                <div class="dashboard-card">
+                    <div class="card-icon">
+                        <i class="fas fa-file-invoice-dollar"></i>
+                    </div>
+                    <h3>Outstanding Invoices</h3>
+                    <p id="outstanding-invoices" class="contract-count">$0.00</p>
+                </div>
+            </div>
+
+            <!-- Graph Section -->
+            <div class="chart-section">
+                <canvas id="financialChart"></canvas>
+            </div>
+        </div>
+        <script src="notifications.js"></script>
+    <script>
+async function fetchDashboardData() {
+    try {
+        const response = await fetch('/dashboard-data-finance');
+        const data = await response.json();
+
+        // Ensure totalBudget is a number
+        const totalBudget = parseFloat(data.totalBudget) || 0;
+        document.getElementById('total-budget').textContent = `$${totalBudget.toFixed(2)}`;
+
+        // Ensure totalExpenses is a number
+        const totalExpenses = parseFloat(data.totalExpenses) || 0;
+        document.getElementById('total-payments').textContent = `$${totalExpenses.toFixed(2)}`;
+
+        // Calculate outstanding invoices
+        let outstandingInvoices = totalExpenses - totalBudget;
+        console.log(outstandingInvoices);
+        if (outstandingInvoices<=0) {
+            outstandingInvoices = 0;
+        }
+
+        document.getElementById('outstanding-invoices').textContent = `$${outstandingInvoices.toFixed(2)}`;
+
+        // Financial Overview Chart
+        const ctx = document.getElementById('financialChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['Total Budget', 'Total Payments', 'Outstanding Invoices'],
+                datasets: [{
+                    data: [totalBudget, totalExpenses, outstandingInvoices],
+                    backgroundColor: ['#4CAF50', '#FF9800', '#F44336'],
+                    borderColor: ['#388E3C', '#F57C00', '#D32F2F'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+    } catch (error) {
+        console.error('Error fetching dashboard data:', error);
+        alert('Failed to load dashboard data. Please try again.');
+    }
+}
+
+        // Call the function to load data on page load
+        fetchDashboardData();
+      </script>
+      
+
+
+</body>
+</html>

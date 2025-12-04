@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New Contract</title>
+    <link rel="stylesheet" href="portal.css">
+</head>
+<body>
+    <div class="container">
+
+        <div class="navbar">
+            <h1>Contract Team Portal</h1>
+            <div class="nav-links">
+                <a href="dashboard.html">Dashboard</a>
+                <a href="create_contract.html" class="active">Create Contract</a>
+                <a href="active_contracts.html">Active Contracts</a>
+                <a href="contract_review.html">Contract Review</a>
+                <a href="settings.html">Settings</a>
+                <a href="../Login_Signup_Pages/Login.html" class="logout-btn">Logout</a>
+            </div>
+        </div>
+
+        <!-- Create Contract Form -->
+        <div class="section">
+            <h2>Create New Contract</h2>
+            <form id="create-contract-form">
+                <div class="form-group">
+                    <label for="vendor-id">Vendor Name:</label>
+                    <select id="vendor-id" name="vendorID" required>
+                        <option value="" disabled selected>Select a Vendor</option>
+                        <!-- Vendor options will be dynamically populated -->
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="start-date">Start Date:</label>
+                    <input type="date" id="start-date" name="startDate" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="end-date">End Date:</label>
+                    <input type="date" id="end-date" name="endDate" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="terms">Contract Terms:</label>
+                    <textarea id="terms" name="terms" rows="5" required></textarea>
+                </div>
+
+                <button type="submit" class="btn">Create Contract</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Fetch vendors and populate the dropdown
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const response = await fetch('/vendors');
+                const vendors = await response.json();
+
+                const vendorSelect = document.getElementById('vendor-id');
+                vendors.forEach(vendor => {
+                    const option = document.createElement('option');
+                    option.value = vendor.VendorID;
+                    option.textContent = vendor.Name;
+                    vendorSelect.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Error fetching vendors:', error);
+                alert('Failed to load vendors.');
+            }
+        });
+
+        // Handle form submission
+            document.getElementById('create-contract-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+
+            const contractData = {
+                vendorID: formData.get('vendorID'),
+                startDate: formData.get('startDate'),
+                endDate: formData.get('endDate'),
+                terms: formData.get('terms'),
+            };
+
+            try {
+                const response = await fetch('/create-contract', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(contractData),
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP Error: ${response.status}`);
+                }
+
+                const result = await response.json();
+                alert(result.message);
+                e.target.reset();
+            } catch (error) {
+                console.error('Error creating contract:', error);
+                alert('Failed to create contract. Please try again.');
+            }
+        });
+
+
+</script>
+</body>
+</html>
